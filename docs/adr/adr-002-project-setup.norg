@@ -22,3 +22,6 @@ version: 1.0.0
 
 ** Considered Options
    - basic rust compiler
+
+* Links
+  - {:../specs/SPEC-002-dev-env:}[SPEC DEV-ENV(002)]

@@ -37,12 +37,42 @@ learning project.
    And my goal is to create an interpriter for this language which is similar to an emulator maybe.
    I will use this reference as a guide to make my own version of a CHIP-8 interpriter
 
-   The first order of business is to understand the specification of CHIP-8, which includes
+   The first order of business is to understand and implement specification of CHIP-8, which includes
    - Memory
    - Registers
    - Display
    - Keyboard
    - Timers
+
+   I have started on how the memory should work, I have pretty much made the specification But, 
+
+   Before we any further I would like to make clear how we are goin to setup this and use this memory and all the that
+   our emulator needs.
+   I am thinking of making a struct with all these things as tag or whatever they are called in rust.
+
+   struct CHIP8 {
+   RAM,
+   Registers,
+   DISPLAY,
+   Input,
+   Timers,
+   }
+
+   Note to myself tags are in Go, In Rust they are called fields.
+
+   After we make a the actual structure part of the struct,
+   We need to implement some methods to the do the actual work like creating and new instance, etc.
+   In rust it is a bit different from Go, we make a whole block that limits the method to the defined struct.
+
+   impl CHIP8 {
+      fn New(args) -> CHIP8 \{...\}
+   }
+
+   This method can be used with any instance of CHIP8
+
+   let chip: CHIP8 = CHIP8.New()
+
+   I think this is how it should be done but I will have to check again tomorrow.
 
 * Links
   - {:../adr/adr-001-choice-of-languagerust-vs-go:}[Language ADR(001)]
