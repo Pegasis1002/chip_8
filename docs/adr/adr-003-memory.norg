@@ -1,0 +1,60 @@
+@document.meta
+title: ADR-003-Memory
+description: Architectural Decision Record
+authors: Your Name
+categories: [adr, architecture]
+created: 2025-12-09
+status: draft
+version: 1.0.0
+@end
+
+* ADR: ADR-003-Memory
+
+** Context
+   - According to [Cowgod's Chip-8 Technical Reference v1.0]{http://devernay.free.fr/hacks/chip8/C8TECH10.HTM} Memory should be 4kb
+   - 4kb = 4096 bytes
+
+** How the RAM works
+   - It is effectively just a list of 4096 things
+   - We want to have a *fixed* length array for this
+   - The RAM is 4096 byte, 1 byte = 8 bits, This means we have a list 4096 long of 8 bit numbers
+   - 8bit number in rust is a uint8(u8)
+   - so we can define it as "let RAM: \[u8; 4096\];"
+
+** Memory Division
+   - We have 0x000(0) to 0xFFF(4096) elements or Memory locations in the RAM
+   - According to [Cowgod's Chip-8 Technical Reference v1.0]{http://devernay.free.fr/hacks/chip8/C8TECH10.HTM}, The first 512 byte should be reserved for the interpripter
+   - 0x000(0) to 0x1FF(511) is not usable for programs
+   - 0x200(512) to 0xFFF(4096)  is usable for progeams
+
+** Memory Map
+   +---------------+= 0xFFF (4095) End of Chip-8 RAM
+   |               |
+   |               |
+   |               |
+   |               |
+   |               |
+   | 0x200 to 0xFFF|
+   |     Chip-8    |
+   | Program / Data|
+   |     Space     |
+   |               |
+   |               |
+   |               |
+   |               |
+   |               |
+   |               |
+   |               |
+   +---------------+= 0x200 (512) Start of most Chip-8 programs
+   | 0x000 to 0x1FF|
+   | Reserved for  |
+   |  interpreter  |
+   +---------------+= 0x000 (0) Start of Chip-8 RAM
+
+** Decision
+   - 4 kb of RAM from 0x000(0) to 0xFFF(4096)
+   - 0x000(0) to 0x1FF(511) reserved for Interpriter
+   - 0x200(512) to 0xFFF(4096) For program
+
+* Links
+  -  

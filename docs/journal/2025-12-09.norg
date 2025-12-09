@@ -47,4 +47,5 @@ learning project.
 * Links
   - {:../adr/adr-001-choice-of-languagerust-vs-go:}[Language ADR(001)]
   - {:../adr/adr-002-project-setup:}[Setup ADR(002)]
-  - {:../adr/adr-002-project-setup:}[Setup ADR(002)]
+  - {:../adr/adr-003-memory:}[Memory ADR(003)]
+
