@@ -1,0 +1,28 @@
+@document.meta
+title: adr-001-choice-of-languagerust-vs-go
+description: 
+authors: dfg
+categories: 
+created: 2025-12-09T18:30:01+0530
+updated: 2025-12-09T20:06:59+0530
+version: 1.1.1
+@end
+
+* ADR: ADR-001: Choice of Language(Rust vs Go)
+
+** Context
+   - What language suites the project the best?
+   - The project is a a very low level project
+
+** Decision
+   - I have chosen Rust
+
+** Consequences
+   - Positive: Memory safe, No need to worry about memory leaks
+   - Negative: Steeper learning curve, hard to learn, Slower Compile times
+
+** Considered Options
+   - Go
+
+* Links
+  - {:../specs/SPEC-001-language:}[Spec Language(001)]

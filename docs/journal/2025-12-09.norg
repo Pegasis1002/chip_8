@@ -1,0 +1,50 @@
+@document.meta
+title: 2025-12-09
+description: 
+authors: dfg
+categories: 
+created: 2025-12-09T15:24:36+0530
+updated: 2025-12-09T20:15:28+0530
+version: 1.1.1
+@end
+
+* Daily Log: 2025-12-09
+I am starting this project up with a vision to understand how a computer actually works.
+
+starting from a CHIP-8 emulator to keep it simple and get me into the mood of low level programming.
+I am conflicted between using go and using rust.
+
+I am leaning toward rust as it usually used for this kinda stuff.
+pros of using rust is I get to know the language more and use it into an actual project.
+I dont think the learning curve will stop me from making this project as I am feeling good about this.
+I the cons of using rust is that I have to spend a lot more time into learning the stuff.
+
+
+As for Go I have gotten pretty good at using it, I mean it is ez.
+the cons are that it dont think I will be able to use this anywhere else. this project will remain a small 
+learning project.
+
+** Setup
+  Now that I have chosen Rust, I need to setup a environment for development,
+  I will just make a new cargo project inside this 8B-VM repo
+  I have set up and compiled a "Hello, World!" application successfully
+
+   What to do next?
+   I think that gathering intel on chip8 is the correct move. From a bit of research I found the pefect reference
+   [Cowgod's Chip-8 Technical Reference v1.0]{http://devernay.free.fr/hacks/chip8/C8TECH10.HTM}
+   This reference manual states that the chip8 is programming language, I was thinking of it as a chip,
+   but it is a language for old do-it-yourself computer.
+   And my goal is to create an interpriter for this language which is similar to an emulator maybe.
+   I will use this reference as a guide to make my own version of a CHIP-8 interpriter
+
+   The first order of business is to understand the specification of CHIP-8, which includes
+   - Memory
+   - Registers
+   - Display
+   - Keyboard
+   - Timers
+
+* Links
+  - {:../adr/adr-001-choice-of-languagerust-vs-go:}[Language ADR(001)]
+  - {:../adr/adr-002-project-setup:}[Setup ADR(002)]
+  - {:../adr/adr-002-project-setup:}[Setup ADR(002)]

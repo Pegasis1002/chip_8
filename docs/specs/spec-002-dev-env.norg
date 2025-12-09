@@ -1,0 +1,14 @@
+@document.meta
+title: SPEC-002-Dev-Env
+description: Technical Specification
+authors: Your Name
+categories: [spec, technical]
+created: 2025-12-09
+version: 0.1.0
+@end
+
+* Spec: SPEC-002-Dev-Env
+** Overview
+  - Rustup and cargo
+** Module Distribution
+   - Module distribution based on struct and Methods

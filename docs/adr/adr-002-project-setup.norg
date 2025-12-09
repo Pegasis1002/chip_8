@@ -1,0 +1,24 @@
+@document.meta
+title: adr-002-project-setup
+description: Architectural Decision Record
+authors: Your Name
+categories: [adr, architecture]
+created: 2025-12-09
+status: draft
+version: 1.0.0
+@end
+
+* ADR: adr-002-project-setup
+
+** Context
+   - Using basic rust compiler vs rustup
+
+** Decision
+  - Rustup 
+
+** Consequences
+   - Positive: Easier to manage the project
+   - Negative: nil
+
+** Considered Options
+   - basic rust compiler

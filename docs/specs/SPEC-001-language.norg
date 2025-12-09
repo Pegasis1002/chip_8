@@ -1,0 +1,15 @@
+@document.meta
+title: language
+description: Technical Specification
+authors: Your Name
+categories: [spec, technical]
+created: 2025-12-09
+version: 0.1.0
+@end
+
+* Spec: language
+** Overview
+  - The project is writen in Rust.
+
+** Architecture
+  - Rust
