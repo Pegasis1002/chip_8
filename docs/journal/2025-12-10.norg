@@ -1,0 +1,63 @@
+@document.meta
+title: Journal Entry 2025-12-10
+description: Daily development log
+authors: Your Name
+categories: [journal]
+created: 2025-12-10
+updated: 2025-12-10
+version: 1.0.0
+@end
+
+* Daily Log: 2025-12-10
+
+** Goals for Today
+   - ( ) Create the structure for chip8
+
+** Notes & Thoughts
+   I have researched a bit on the struct construct.
+   we can absolutly use the syntace I wrote in yesterday's {:./2025-12-09.norg:}[journal]
+
+** Structure of chip 8
+   struct CHIP8 {
+   RAM,
+   Registers,
+   DISPLAY,
+   Input,
+   Timers,
+   }
+** Implementation
+   - how are we going to emulate the actuall hardware?
+   - What do we need to emulate?
+   - Memory has already been decided {:./docs/adr/adr-003-memory.norg:}[Here].
+  
+     We now need the following:
+   - {*** Registers}
+   - {*** Stack}
+   - {*** Display}
+   - {*** Input/Keyboard}
+   - {*** Timers}
+
+*** Registers
+    - Chip has 21 total registers.
+    - 16 of them are general purpose so can store any 8 bit value
+    - They are defined as Vx, where x is a hexadecimal from 0 to F, therefore 16 registers
+
+    - The other register is a 16 bit register which is called 'I'
+    - it is used to store Memory adderess.
+    - since the memory adderesses can range from 0x000(0) to 0xFFF(4096), only 12 bits are needed.
+      keeping in mind that hexadecimal needs 4 binary bit(0 = 0000, A = 1010, F = 1111)
+
+    - VF should not be used for any program as it is used as a flag for some Instructions.
+    - We also have registers for {*** Timers}[delay and sound timers], these are decremented(automatically) at 60 Hz when non-zero
+
+    - There are some pseudo Registers that are not accessable to programs, but help in running the program.
+    - The Program counter (PC):
+      A 16 bit register that stores the adderess of the thing that is being executed currently.
+    - The Stack pointer (SP):
+      A 8 bit register that stores a pointer to the topmost element of the {*** Stack}
+
+*** Stack
+    - an array of length 16, containing 16 bit values
+** End of Day Review
+   - What did I learn?
+   - What is blocking me?
