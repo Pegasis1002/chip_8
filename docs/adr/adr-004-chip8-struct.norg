@@ -17,18 +17,23 @@ version: 1.0.0
 ** Decision
    - Chip-8 will be a struct having an initialize method.
    - this method will set the fields to appropriate zero values.
+
 *** Struct
     struct chip8 {
-    RAM \[u8, 4096\], // 4096 x u8 = 4 KB
-    V \[u8, 16\], // individual register Vx can be accessed by V\[x\]
-    I u16
+    RAM \[u8, 4096\]; // 4096 x u8 = 4 KB
+    V \[u8, 16\]; // individual register Vx can be accessed by V\[x\]
+    I u16; // Adderess Register
+    PC u16; // Points to current instruction adderess
+    SP u16; // Points to top most level of the stack
     }
 
-** Consequences
-   - Positive: ...
-   - Negative: ...
+*** Init Method
+    impl chip8 {
+    fn Init() -> self{
+    // Set all registers to zero and return a chip8 struct
+    let mut c = chip8 { ... }
+    return c
+    }}
 
-** Considered Options
-   - Option 1
-   - Option 2
-
+* Links 
+  - 

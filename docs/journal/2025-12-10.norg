@@ -40,9 +40,9 @@ version: 1.0.0
 *** Registers
     - Chip has 21 total registers.
     - 16 of them are general purpose so can store any 8 bit value
-    - They are defined as Vx, where x is a hexadecimal from 0 to F, therefore 16 registers
+    - They are defined as Vx, where x is a hexadecimal from 0 to F(15), therefore 16 registers
 
-    - The other register is a 16 bit register which is called 'I'
+    - Another register is a 16 bit register which is called 'I'
     - it is used to store Memory adderess.
     - since the memory adderesses can range from 0x000(0) to 0xFFF(4096), only 12 bits are needed.
       keeping in mind that hexadecimal needs 4 binary bit(0 = 0000, A = 1010, F = 1111)
@@ -61,3 +61,7 @@ version: 1.0.0
     - When the interpriter does some job and completes it, it has to tell the program that it has done it and point the program
       to where it left off before it took up the job.
     - we can store up to 16 subroutines in the stack.
+
+* Links
+  - {:./2025-12-11.norg:}[11-12-2025 journal enrty]
+

@@ -1,0 +1,32 @@
+@document.meta
+title: SPEC-004-chip8-structure
+description: Technical Specification
+authors: Your Name
+categories: [spec, technical]
+created: 2025-12-11
+version: 0.1.0
+@end
+
+* Spec: SPEC-004-chip8-structure
+
+** Overview
+   - The chip8 structure is defined as a normal rust Struct 
+   - It has _ fields.
+
+** Architecture
+   It consist of the following fields
+   - RAM \[u8; 4096\], // Array of u8, 4096 long
+   - V \[u8; 16\], // Array of u8, 16 long
+   - I u16, // 16-bit Register
+   - PC u16, // 16-bit Register, Points to current instruction adderess
+   - SP u16, // 16-bit Register, Points to top most level of the stack
+
+
+** Model
+    struct chip8 {
+    RAM \[u8; 4096\], // 4096 x u8 = 4 KB
+    V \[u8; 16\], // individual register Vx can be accessed by V\[x\]
+    I u16, // Adderess Register
+    PC u16, // Points to current instruction adderess
+    SP u16, // Points to top most level of the stack
+    }

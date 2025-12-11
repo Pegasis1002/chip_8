@@ -22,11 +22,43 @@ version: 1.0.0
     - V \[u8, 16\];
     - now the most important thing, to access any one register I think syntax was V\[x\].
       so if I want to set VA to contain 0x3F, we can do this 
+
       V\[0xA\] = 0x3F
 
-      This will set the 10th register to store 0x3F()
+      This will set the 10th register to store 0x3F(63)
+
+    - The address register needs to be 16bit as I wrote yesterday only 12 bits are actually needed.
+      I researched a bit on why can I not just use a 12 bit uint instead of a 16 bit, it seems efficient at first.
+      but ofcourse there is a reason,
+      They probably tried to make a 12 bit register, but ran into an glaring issue, since 12 bits is not divisible by 8
+      and our standard registers are 16 bits, each memory location is 8 bit or 1 byte,
+      on a hardware level it needs complex logic to read 1.5 bytes(12 bits) for each adderess.
+    - the solution was simple just use a standard 16 bit register for this. We are going to do the same.
+      
+      I u16;
+
+    - The Program counter and stack pointers are also considered registers, defined as follows
+      
+      PC u16;
+      SP u16;
+
+*** Code1
+    I will now implement this much to rust so I should make a {:../adr/adr-004-chip8-struct.norg:}[adr] and spec for this.
+    I have made an adr and the spec, now I will start to implement this struct in actuall main.rs
+
+    I did it again I mixed up Go and Rust again, in the struct the fields need to be saperated by ',' and not ";".
+    I had to go back and change it in the spec :(
+    I am not go back to the journals and change it as it is to much work.
+
+    The program compiles now with an unused warning(expected).
+    There are more things remaining to be added to the struct, for example an display, Timers and sound which do come
+    under Registers but I will saperate them into a diff head, Input is remaining, and I dont think there is more.
+    4 more things to go till the structure is complete.
+
 
 ** End of Day Review
    - What did I learn?
    - What is blocking me?
 
+* Links
+  - {:../adr/adr-004-chip8-struct.norg:}[ADR Chip8 struct]
