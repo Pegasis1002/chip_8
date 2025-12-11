@@ -5,6 +5,8 @@ struct Chip8 {
     i:  u16,
     pc:  u16,
     sp:  u16,
+    dt: u8,
+    st: u8,
 }
 
 fn main() {
