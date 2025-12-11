@@ -81,6 +81,9 @@ version: 1.0.0
 
     I should edit the struct to include these times, but first I need to make an adr.
 
+*** Input
+    - I am not sure for Input, I have read the keyboard section of cowgod's Tech ref, but did not understand a bit,
+      jod for tomorrow is to do input and display.
 
 
 ** End of Day Review
