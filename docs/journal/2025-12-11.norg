@@ -53,7 +53,28 @@ version: 1.0.0
     The program compiles now with an unused warning(expected).
     There are more things remaining to be added to the struct, for example an display, Timers and sound which do come
     under Registers but I will saperate them into a diff head, Input is remaining, and I dont think there is more.
+
     4 more things to go till the structure is complete.
+
+    Display is last as it is a bit more complex to understand, Let us do Times next
+
+*** Timers and Sound
+    Only 2 timers, delay and sound timer.
+
+    - the delay timer is linked to the a new field named DT(16 bit reg?).
+      It is active when DT is non zero, is decremented by 1 at the rate of 60Hz
+      When DT reaches zero delay timer is deactivated.
+
+    - The sound timer is linked to a new field named ST(idk but 16bit reg?).
+      It is active when ST is non xero, is decremented by 1 at the rate of 60Hz
+      As long as ST > 0, chip8 buzzer will sound. When ST reaches xero, sound timer deactivates.
+
+    This is what the cowgod's technical ref states, My understaning is that we need to more registers,
+    The length We should calculate, 
+      The length of this will determine how long the timers can last, If we make them 8 bit, it will last about 255 sec.
+      If we make it 16 bits, it will last much more, so I think 16 bit is the way to go, it allows for more flexiblility
+      for the programs.
+
 
 
 ** End of Day Review
