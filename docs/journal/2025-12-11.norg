@@ -47,7 +47,7 @@ version: 1.0.0
     I have made an adr and the spec, now I will start to implement this struct in actuall main.rs
 
     I did it again I mixed up Go and Rust again, in the struct the fields need to be saperated by ',' and not ";".
-    I had to go back and change it in the spec :(
+    I had to go back and change it in the spec 😭.
     I am not go back to the journals and change it as it is to much work.
 
     The program compiles now with an unused warning(expected).
@@ -74,6 +74,12 @@ version: 1.0.0
       The length of this will determine how long the timers can last, If we make them 8 bit, it will last about 255 sec.
       If we make it 16 bits, it will last much more, so I think 16 bit is the way to go, it allows for more flexiblility
       for the programs.
+    Should I google the proper size of DT and  ST? probably yes.
+    It turns out that I can not make the registers 16bit, it will have compatibility issues with programs 😭.
+    Anyways, It turns out that I can chose what frequency sound is produced by the interpriter😁.
+    Well let us decide that another time, when we implement it.
+
+    I should edit the struct to include these times, but first I need to make an adr.
 
 
 

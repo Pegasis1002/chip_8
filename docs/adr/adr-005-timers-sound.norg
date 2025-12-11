@@ -1,0 +1,34 @@
+@document.meta
+title: ADR-005-Timers-Sound
+description: Architectural Decision Record
+authors: Your Name
+categories: [adr, architecture]
+created: 2025-12-11
+status: draft
+version: 1.0.0
+@end
+
+* ADR: ADR-005-Timers-Sound
+
+** Context
+   - How to represent Delay and Sount Timers in rust?
+   - How does the decrementation work?
+   - 8bit uint vs 16 bit uint
+
+** Decision
+    - We represent the Delay times and Sound timer as 8 bit uints.
+    - In chip8 struct
+      struct Chip8 {
+        dt: u8,
+        st: u8,
+        // other fields
+      }
+   - The logic for decrementation will be decided on how the main loop is setup.
+
+** Consequences
+   - Positive: true to actual hardware, eazier logic wise, efficient use of time
+   - Negative: less fun
+
+** Considered Options
+   - 16 bit uint
+
