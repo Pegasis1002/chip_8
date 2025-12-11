@@ -58,6 +58,6 @@ version: 1.0.0
 
 *** Stack
     - an array of length 16, containing 16 bit values
-** End of Day Review
-   - What did I learn?
-   - What is blocking me?
+    - When the interpriter does some job and completes it, it has to tell the program that it has done it and point the program
+      to where it left off before it took up the job.
+    - we can store up to 16 subroutines in the stack.

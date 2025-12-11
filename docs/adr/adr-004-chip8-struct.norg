@@ -1,0 +1,34 @@
+@document.meta
+title: ADR-004-chip8-struct
+description: Architectural Decision Record
+authors: Your Name
+categories: [adr, architecture]
+created: 2025-12-11
+status: draft
+version: 1.0.0
+@end
+
+* ADR: ADR-004-chip8-struct
+
+** Context
+   - How is the chip-8 structure constructed in practice?
+   - What fields are needed to make a fully functional chip-8 interpriter?
+
+** Decision
+   - Chip-8 will be a struct having an initialize method.
+   - this method will set the fields to appropriate zero values.
+*** Struct
+    struct chip8 {
+    RAM \[u8, 4096\], // 4096 x u8 = 4 KB
+    V \[u8, 16\], // individual register Vx can be accessed by V\[x\]
+    I u16
+    }
+
+** Consequences
+   - Positive: ...
+   - Negative: ...
+
+** Considered Options
+   - Option 1
+   - Option 2
+

@@ -1,0 +1,32 @@
+@document.meta
+title: Journal Entry 2025-12-11
+description: Daily development log
+authors: Your Name
+categories: [journal]
+created: 2025-12-11
+updated: 2025-12-11
+version: 1.0.0
+@end
+
+* Daily Log: 2025-12-11
+
+** Goals for Today
+   - ( ) Continue to understand and construct chip-8 structure. 
+
+** Notes & Thoughts
+   I think that I should get started on writing actual code now, It will make me feel progress.
+   I have already finalized the RAM, I now need to decide on how I am going to represent the registers and the stack.
+
+*** Registers
+    - As for the 16 8-bit registers We can just make an array of u8s 16 element long
+    - V \[u8, 16\];
+    - now the most important thing, to access any one register I think syntax was V\[x\].
+      so if I want to set VA to contain 0x3F, we can do this 
+      V\[0xA\] = 0x3F
+
+      This will set the 10th register to store 0x3F()
+
+** End of Day Review
+   - What did I learn?
+   - What is blocking me?
+
