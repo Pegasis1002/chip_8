@@ -25,6 +25,8 @@ version: 1.0.0
     I u16; // Adderess Register
     PC u16; // Points to current instruction adderess
     SP u16; // Points to top most level of the stack
+    ST: u8,
+    DT: u8,
     }
 
 *** Init Method
