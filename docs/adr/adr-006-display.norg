@@ -1,0 +1,33 @@
+@document.meta
+title: adr-006-display
+description: Architectural Decision Record
+authors: Your Name
+categories: [adr, architecture]
+created: 2025-12-12
+status: draft
+version: 1.0.0
+@end
+
+* ADR: adr-006-display
+
+** Context
+  How big should it be?
+  How do we represent it in rust?
+
+** Decision
+    - It should be 64x32 pixels
+    - In rust we can make an array of 2048 1-bit uints
+      
+    struct chip8 {
+      display \[u1; 2048\],
+      // Other fields
+    }
+
+** Consequences
+   - Positive: ...
+   - Negative: ...
+
+** Considered Options
+   - Option 1
+   - Option 2
+
