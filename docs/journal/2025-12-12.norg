@@ -1,0 +1,46 @@
+@document.meta
+title: Journal Entry 2025-12-12
+description: Daily development log
+authors: Your Name
+categories: [journal]
+created: 2025-12-12
+updated: 2025-12-12
+version: 1.0.0
+@end
+
+* Daily Log: 2025-12-12
+** Notes & Thoughts
+  *** Input
+      - The tech ref states that the older computers which used chip8 language, had a 16-key hexadecimal keypad
+      - It had the following layout
+
+        \+-----------+
+        \| 1	2	3	C \|
+        \| 4	5	6	D \|
+        \| 7	8	9	E \|
+        \| A	0	B	F \|
+        \+-----------+
+
+      Somehow we need to map this layout to QWERTY keyboard.
+      I think what we can do is make a 8bit uint as input, whenever we need input we can set it to the desired hexcode
+*** Display
+    - The Display in the original chip8 implementation was a 64x32 monochrome display.
+
+    \+----------------+
+    \|(0,0)	   (63,0)|
+    \|                |
+    \|(0,31)	(63,31)|
+    \+----------------+
+
+    - We will follow the same pattern
+      \+----------------+----------+------+----------------+----------+------+
+      \| Character "0"  | Binary   | Hex  | Character "0"  | Binary   | Hex  |
+      \+----------------+----------+------+----------------+----------+------+
+      \| *****          | 11110000 | 0xF0 |
+      \| *   *          | 10010000 | 0x90 |
+      \| *   *          | 10010000 | 0x90 |
+      \| *   *          | 10010000 | 0x90 |
+      \| *****          | 11110000 | 0xF0 |
+      \+----------------+----------+------+
+** End of Day Review
+

@@ -86,7 +86,6 @@ version: 1.0.0
       jod for tomorrow is to do input and display.
 
     It is almost 12 I am signing off now.
-   - What is blocking me?
 
 * Links
   - {:../adr/adr-004-chip8-struct.norg:}[ADR Chip8 struct]
