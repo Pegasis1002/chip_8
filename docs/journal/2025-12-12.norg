@@ -63,16 +63,18 @@ version: 1.0.0
 
     We need the following from init fucntion:
     - RAM set all 0x00(0)
+    - load the default font into memory
     - PC sel to 0x200(512) // start of program in memory
     - Stack set all to 0x00 // Clear all subroutines
     - Stack pointer set to 0x00(0) // Initially empty
     - Adderess Register(I) set to 0x00(0) // initialized to zero
+    - clear the display
 
     To achive this we will need to make an method implimentation under the chip8 struct.
     impl chip8 {
       fn init() -> self {
         self.clearRam();
-        self.pc = 0x00;
+        self.pc = 0x200;
         self.sp = 0x00;
         self.i = 0x00;
         self.stackclear();
@@ -80,6 +82,10 @@ version: 1.0.0
       }
       // Other methods
     }
+
+*** Font
+    - We need to store the font from 50 onward into memory, I am debating on wheather I need a function or to just hard code it.
+      I think to make a function It will not be used often as we only need to load font once.
 
 ** End of Day Review
 
