@@ -86,6 +86,7 @@ version: 1.0.0
 *** Font
     - We need to store the font from 50 onward into memory, I am debating on wheather I need a function or to just hard code it.
       I think to make a function It will not be used often as we only need to load font once.
+    - first I need to create an array of fonts For that I need reference the fonts definition .{:../specs/spec-006-display.norg:** Sprite sheet(0 -> F)}[link]
 
 ** End of Day Review
 
