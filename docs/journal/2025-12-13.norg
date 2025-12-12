@@ -1,0 +1,33 @@
+@document.meta
+title: Journal Entry 2025-12-13
+description: Daily development log
+authors: Your Name
+categories: [journal]
+created: 2025-12-13
+updated: 2025-12-13
+version: 1.0.0
+@end
+
+* Daily Log: 2025-12-13
+
+** Goals for Today
+   - ( ) Implement init method
+
+** Notes & Thoughts
+   - I think I get got it now, to initialize the struct with all zero values,
+     I have to do this:
+     let mut chip = Chip8 {
+      ram: \[0;4096\],
+      pc: 0x00,
+      // other fields
+     }
+
+   - Then return the struct and the init function is done
+   - We also have to set the font into memory, we can do that with a for loop.
+      
+    
+
+** End of Day Review
+   - What did I learn?
+   - What is blocking me?
+

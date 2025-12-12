@@ -1,3 +1,21 @@
+static FONTS: [u8; 80] = [
+  0xF0, 0x90, 0x90, 0x90, 0xF0,
+  0x20, 0x60, 0x20, 0x20, 0x70,
+  0xF0, 0x10, 0xF0, 0x80, 0xF0,
+  0xF0, 0x10, 0x90, 0x10, 0xF0,
+  0x90, 0x90, 0xF0, 0x10, 0x10,
+  0xF0, 0x80, 0xF0, 0x10, 0xF0,
+  0xF0, 0x80, 0xF0, 0x90, 0xF0,
+  0xF0, 0x10, 0x20, 0x40, 0x50,
+  0xF0, 0x90, 0xF0, 0x90, 0xF0,
+  0xF0, 0x90, 0xF0, 0x10, 0xF0,
+  0x50, 0x90, 0xF0, 0x90, 0x90,
+  0xE0, 0x90, 0xE0, 0x90, 0xE0,
+  0xF0, 0x80, 0x80, 0x80, 0xF0,
+  0xE0, 0x90, 0x90, 0x90, 0xE0,
+  0xF0, 0x80, 0xF0, 0x80, 0xF0,
+  0xF0, 0x80, 0xF0, 0x80, 0x80,
+];
 
 struct Chip8 {
     ram: [u8; 4096],
@@ -7,28 +25,36 @@ struct Chip8 {
     sp:  u16,
     dt: u8,
     st: u8,
-    display: [bool, 2048],
-    stack: [u16, 16],
+    display: [bool; 2048],
+    stack: [u16; 16],
 }
 
-impl chip8 {
-    fn init() -> self{
-        // Set special Registers to zero value
-        self.pc = 0x200; // program starts at 0x220(512 bytes)
-        self.sp = 0x00; // stack pointer is empty initialy
-        self.i = 0x0000; // adderess reister stores nothing initialy
-
-        // Clear all general purpose registers
-        for i in self.v{
-            self.v[i] = 0x000;
+impl Chip8 {
+    fn init() -> Self {
+        // Initialize chip8 with respective zero values
+        let mut chip = Chip8 {
+            ram: [0; 4096],
+            v: [0; 16],
+            i: 0x0000,
+            pc: 0x200, // 0x200(512) is where the program starts
+            sp: 0x00,
+            dt: 0x00,
+            st: 0x00,
+            display: [false; 2048], // set the display to be all zeros
+            stack: [0x0000; 16],
+        };
+        // Insert FONTS into ram starting from 0x50(80)
+        for (i, &byte) in FONTS.iter().enumerate() {
+            chip.ram[0x50 + i] = byte;
         }
-
-        for i in self.stack {
-            self.stack[i] = 0x0000
-        }
+        // Return the initialized chip8 struct
+        return chip
     }
 }
 
 fn main() {
+    let mut chip = Chip8::init();
     println!("Hello, world!");
+    // Test FONT initialized
+    println!("Ram: {}", chip.ram[0x51]);
 }
