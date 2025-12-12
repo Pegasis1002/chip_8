@@ -23,6 +23,7 @@ version: 1.0.0
 
       Somehow we need to map this layout to QWERTY keyboard.
       I think what we can do is make a 8bit uint as input, whenever we need input we can set it to the desired hexcode
+
 *** Display
     - The Display in the original chip8 implementation was a 64x32 monochrome display.
 
@@ -51,6 +52,34 @@ version: 1.0.0
     }
 
     Then after this we have the complete structure for our 8-bit computer.
+    for now I will omit the input from the struct, and we should move on and implements some methods.
+    We also need a stack, dont we? I think it is pretty easy to dicide, it needs 16 16-bit 
+
+*** Methods
+    - We need a few methods to do the initial setup  
+      namely, an init method, a clear display method and also some thing to load the fonts into memory.
+    - Let us start by discusing the init method, It should set all the registers to their respective zero values, 
+      clear display and get initialize the memory, get the program into the memory.
+
+    We need the following from init fucntion:
+    - RAM set all 0x00(0)
+    - PC sel to 0x200(512) // start of program in memory
+    - Stack set all to 0x00 // Clear all subroutines
+    - Stack pointer set to 0x00(0) // Initially empty
+    - Adderess Register(I) set to 0x00(0) // initialized to zero
+
+    To achive this we will need to make an method implimentation under the chip8 struct.
+    impl chip8 {
+      fn init() -> self {
+        self.clearRam();
+        self.pc = 0x00;
+        self.sp = 0x00;
+        self.i = 0x00;
+        self.stackclear();
+        self.clearReg();
+      }
+      // Other methods
+    }
 
 ** End of Day Review
 

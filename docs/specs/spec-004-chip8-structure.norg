@@ -29,4 +29,8 @@ version: 0.1.0
     I u16, // Adderess Register
     PC u16, // Points to current instruction adderess
     SP u16, // Points to top most level of the stack
+    dt: u8,
+    st: u8,
+    display: \[bool, 2048\],
+    stack: \[u16, 16\]
     }
