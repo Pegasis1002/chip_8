@@ -15,19 +15,22 @@ version: 1.0.0
   How do we represent it in rust?
 
 ** Decision
-    - It should be 64x32 pixels
-    - In rust we can make an array of 2048 1-bit uints
+   - It should be 64x32 pixels
+   - In rust we can make an array of 2048 boolean uints
       
-    struct chip8 {
-      display \[u1; 2048\],
+     struct chip8 {
+      display \[bool; 2048\],
       // Other fields
     }
 
 ** Consequences
-   - Positive: ...
-   - Negative: ...
+   - Easier to implement
+   - less work
+   - True to original hardware
 
 ** Considered Options
-   - Option 1
-   - Option 2
+   - 128x64 support
+   - 64x64  support
 
+* Links
+  -
