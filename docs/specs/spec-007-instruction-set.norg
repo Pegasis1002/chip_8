@@ -24,6 +24,30 @@ version: 0.1.0
     - x - A 4-bit value, the lower 4 bits of the higher byte of Instruction
     - y - A 4-bit value, the higher 4 bits of the lower byte of Instruction
 
+    In Rust:
+      let f = code >> 12; // Family identifier
+
+      let nnn = code & 0x0FFF; // address
+      let nn = code & 0x00FF;
+      let n = code & 0x000F; // nibble
+
+      let x = code & 0x0F00;
+      let y = code & 0x00F0;
+
+*** Identify and execute the instruction
+    To identify the instruction we use nested match statements
+    We first match for the family, in the execution statement of the family, match for what the instruction needs,
+    execute the proper statements.
+
+**** Rust
+      match f {
+        0x0 => {
+          match nn { ... }
+        },
+        0x1 =? { ... },
+        // and so on till 0xF
+      }
+
 *** 0 family
 
     \+-------------\+----------\+------------------------\+
@@ -41,6 +65,23 @@ version: 0.1.0
     - 00E0 clears the screen by setting each value of of chip.display\[\] to false
 
     - 00EE sets chip.pc = chip.sp; chip.sp -= 1;
+
+**** Rust
+     match f {
+       0x0 => match nn {
+         0xE0 => {
+           for ref mut i in chip.display {
+             *i = flase;
+           }
+         },
+         0xEE => {
+           chip.pc = chip.sp;
+           chip.sp -= 1;
+         }
+       },
+       // Other families
+     }
+
 
 ** Architecture
    - Components involved...

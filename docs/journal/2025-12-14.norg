@@ -1,0 +1,46 @@
+@document.meta
+title: Journal Entry 2025-12-14
+description: Daily development log
+authors: Your Name
+categories: [journal]
+created: 2025-12-14
+updated: 2025-12-14
+version: 1.0.0
+@end
+
+* Daily Log: 2025-12-14
+
+** Goals for Today
+   - (x) Get the instruction set going.
+   - (-) document and implement instruction set execution.
+
+** Notes & Thoughts
+*** Back to Implementaion of instruction
+    Now that we have decoded the instruction into f, nnn, nn, n, x and y;
+    We need to create a match table. the syntax is like this
+    match f {
+      0x0 => { ... },
+      0x1 => { ... },
+      // Other families
+      0xF => { ... },
+    }
+
+    I think we can nest match statement, that way we can differentiate between instructions of same family.
+
+    Example:
+      match f {
+        0x0 => {
+          match nn {
+            0xE0 => CLS,
+            0xEE => RET,
+          }
+        },
+      }
+
+    Now I will implement the instruction for the 0 family, write the spec for it before goin to bed.
+
+
+** End of Day Review
+   - What did I learn?
+   - What is blocking me?
+

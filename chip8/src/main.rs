@@ -56,8 +56,6 @@ fn main() {
     let mut chip = Chip8::init();
     println!("Hello, world!");
     exec_instruction(&mut chip, 0xA602);
-    // Test FONT initialized
-    println!("Ram: {}", chip.ram[0x51]);
 }
 
 
@@ -71,11 +69,26 @@ fn exec_instruction(chip: &mut Chip8, code: u16){
     let x = code & 0x0F00;
     let y = code & 0x00F0;
 
-    println!("f: {:#X}", f);
-    println!("nnn: {:#X}", nnn);
-    println!("nn: {:#04X}", nn);
-    println!("n: {:#X}", n);
-    println!("x: {:#X}", x);
-    println!("y: {:#X}", y);
-    println!("instruction: {:#X}", code);
+    match f {
+        0x0 => {
+            match nn {
+                0xE0 => {
+                    clearDisplay(chip);
+                    println!{"done!"}
+                },
+                0xEE => {
+                    chip.pc = chip.sp;
+                    chip.sp -= 1;
+                },
+                _ => {}
+            }
+        },
+        _ => println!("Invalid instruction.")
+    }
+}
+
+fn clearDisplay(chip: &mut Chip8){
+    for ref mut i in chip.display{
+        *i = false;
+    }
 }
