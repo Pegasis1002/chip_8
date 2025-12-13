@@ -18,14 +18,31 @@ version: 1.0.0
      I have to do this:
      let mut chip = Chip8 {
       ram: \[0;4096\],
-      pc: 0x00,
+      pc: 0x200,
       // other fields
      }
 
    - Then return the struct and the init function is done
    - We also have to set the font into memory, we can do that with a for loop.
       
+   I have implemented the init function. Now remains the inpust function. It seems a bit more complex,
+     So lets tacle it when it is needed.
+   Now we need functions to clear the display, It is the same as when cleared the ram a few days ago, 
+     for i in display{
+        display\[i\] = false;
+     }
+
+   It turns out that I dont know enough about ownership and borrowing in rust, I can't seem to get the above working
+   I will come back to this after I implement most of the instruction set.
+
+*** Instruction Set
+    - Chip8 has about 36 instruction, there are more in super chip48 but we dont need to worry about that,
+      stick to the vanila chip8
+    - All instructions are 2 bytes long, stored mostsignificant bit first, i.e. if 0x4A is to be stored, 
+      it will store 4 first then A as 4 is in 16's place(more significant) an A is at 1's place(more significant).
+    - Instructions should start at an even RAM adderess.
     
+      This concludes the rules for the set, I will now make an Spec for the instruction set.
 
 ** End of Day Review
    - What did I learn?
