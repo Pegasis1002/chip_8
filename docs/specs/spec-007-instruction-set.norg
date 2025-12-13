@@ -1,0 +1,54 @@
+@document.meta
+title: SPEC-007-instruction-set
+description: Technical Specification
+authors: Your Name
+categories: [spec, technical]
+created: 2025-12-13
+version: 0.1.0
+@end
+
+* Spec: SPEC-007-instruction-set
+
+** Overview
+   - There are 36 total instructions divided into 16 families.
+   - The falmilies are identified by the most significant 4-bits of the instruction.
+     For example, A602 belongs to A family which sets Adderess register(i) to lowest 12-bit of the instruction. 
+     i.e chip.i = 0x602 for this example.
+   - These families are defined from 0 to F(15).
+
+** All Instructions
+*** Decoding the Instruction
+    - nnn or addr - A 12-bit value, Lowest 12 bits of the instruction
+    - n or nibble - A 4-bit value, Lowest 4 bits of the instruction
+    - x - A 4-bit value, the lower 4 bits of the higher byte of Instruction
+    - y - A 4-bit value, the higher 4 bits of the lower byte of Instruction
+*** 0 family
+
+    \+-------------\+----------\+------------------------\+
+    \| Instruction \| Assembly \|     Function           \|
+    \+-------------\+----------\+------------------------\+
+    \|    0nnn     \| SYS addr \| IGNORE                 \|
+    \+-------------\+----------\+------------------------\+
+    \|    00E0     \|   CLS    \| Clear Display          \|
+    \+-------------\+----------\+------------------------\+
+    \|    00EE     \|   RET    \| Return from subroutine \|
+    \+-------------\+----------\+------------------------\+
+
+    - 0nnn is to be ignored as it was specificaly ment for old chip-8 computers
+
+    - 00E0 clears the screen by setting each value of of chip.display\[\] to false
+
+    - 00EE sets chip.pc = chip.sp; chip.sp -= 1;
+
+** Architecture
+   - Components involved...
+
+    \+-------------\+----------\+------------------\+
+    \| Instruction \| Assembly \|     Function     \|
+    \+-------------\+----------\+------------------\+
+    \|             \|          \|                  \|
+    \+-------------\+----------\+------------------\+
+    \|             \|          \|                  \|
+    \+-------------\+----------\+------------------\+
+    \|             \|          \|                  \|
+    \+-------------\+----------\+------------------\+

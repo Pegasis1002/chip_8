@@ -43,6 +43,7 @@ version: 1.0.0
     - Instructions should start at an even RAM adderess.
     
       This concludes the rules for the set, I will now make an Spec for the instruction set.
+    - 
 
 ** End of Day Review
    - What did I learn?
