@@ -55,6 +55,14 @@ impl Chip8 {
 fn main() {
     let mut chip = Chip8::init();
     println!("Hello, world!");
+    exec_instruction(&mut chip, 0xA602);
     // Test FONT initialized
     println!("Ram: {}", chip.ram[0x51]);
+}
+
+
+fn exec_instruction(chip: &mut Chip8, code: u16){
+    let f = code >> 12;
+    println!("f: {}", f);
+    println!("instruction: {}", code);
 }

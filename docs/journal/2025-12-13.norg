@@ -43,7 +43,51 @@ version: 1.0.0
     - Instructions should start at an even RAM adderess.
     
       This concludes the rules for the set, I will now make an Spec for the instruction set.
-    - 
+    - To identify what code to run on what instruction, we must create a match statement.
+    - This is great as there we have a lot of instructions that can be executed in 1 line.
+    - I fint it hard to understand the ownership and borrowing concept, I think I am getting it now.
+
+**** Borrow-checker logic
+      When we want to modify some data, with out taking owner ship of it, we modify a &mut ref(mutable reference) to that data.
+      
+      Now why do we not want to take ownership of the data?
+      The answer to this question is quite simple, We do not just give away free stuff, do we?
+      That was a very simplified explaination, I will give a detaied explaination now,
+      suppose I have a pen, I am not using it at the moment, a classmate wants to use it,
+      I do not want to just give the pen away. I want that back cuz I bought that with hard earned money.
+      so I say to him give that back when you are done using it.
+
+      This is effectively what happens when we pass a reference to some operation.
+      Example:
+        
+        let x = "some data";
+        read_ref(\&x); // This takes borrows the pen, looks at it and returns it back as it is. hence read only(immutable).
+        modify_ref(\&mut x); // This borrows the pen, opens it up, refills the ink and then returns that back, hence mutable.
+        println!\("\{\}", x\); // This takes the ownership of the data, does not give it back, so we cannot use it again.
+
+      If I want to make a copy of the variable and edit that, I should it like this
+        // let y = x; // this will give a error, if we follow the above example.
+
+        let x = "some data again"; // set the data again
+        let y = x; // This will not cause any error it simply create a copy of the data
+
+        let y = "changed data";
+        println!\("\{\}", \&x\); // prints "some data again"
+        println!\("\{\}", \&y\); // prints "changed data"
+
+
+*** Back to Instruction set
+    - So now we pass a mutable ref of the chip, as well as the instruction code to our execute function.
+      
+      fn exec_instruction(chip: &mut Chip8, code: u16) \{ ... \}
+
+    - Inside the function, we first decode the instruction(extract f, nnn, nn, n, x, y)
+      We do it very systimaticaly, first for the f or family identifier(this is a quality of life upgrade I made myself)
+
+    We need the most significant 4 bits of the instruction, so we can bitshift a copy of the instruction to right by 12 bits.
+    If i remember right, it should be like this.
+      let f = code >> 12;
+
 
 ** End of Day Review
    - What did I learn?

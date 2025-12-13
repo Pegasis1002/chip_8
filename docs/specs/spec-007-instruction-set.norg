@@ -18,10 +18,12 @@ version: 0.1.0
 
 ** All Instructions
 *** Decoding the Instruction
+    - f or family - A 4-bit value, the higest 4 bits of the instruction
     - nnn or addr - A 12-bit value, Lowest 12 bits of the instruction
     - n or nibble - A 4-bit value, Lowest 4 bits of the instruction
     - x - A 4-bit value, the lower 4 bits of the higher byte of Instruction
     - y - A 4-bit value, the higher 4 bits of the lower byte of Instruction
+
 *** 0 family
 
     \+-------------\+----------\+------------------------\+
