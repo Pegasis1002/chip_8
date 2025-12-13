@@ -62,7 +62,20 @@ fn main() {
 
 
 fn exec_instruction(chip: &mut Chip8, code: u16){
-    let f = code >> 12;
-    println!("f: {}", f);
-    println!("instruction: {}", code);
+    let f = code >> 12; // Family identifier
+
+    let nnn = code & 0x0FFF; // address
+    let nn = code & 0x00FF;
+    let n = code & 0x000F; // nibble
+
+    let x = code & 0x0F00;
+    let y = code & 0x00F0;
+
+    println!("f: {:#X}", f);
+    println!("nnn: {:#X}", nnn);
+    println!("nn: {:#04X}", nn);
+    println!("n: {:#X}", n);
+    println!("x: {:#X}", x);
+    println!("y: {:#X}", y);
+    println!("instruction: {:#X}", code);
 }

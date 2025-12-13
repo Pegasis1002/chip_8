@@ -82,11 +82,29 @@ version: 1.0.0
       fn exec_instruction(chip: &mut Chip8, code: u16) \{ ... \}
 
     - Inside the function, we first decode the instruction(extract f, nnn, nn, n, x, y)
-      We do it very systimaticaly, first for the f or family identifier(this is a quality of life upgrade I made myself)
+**** Decode the instruction
+    We do it very systimaticaly, first for the f or family identifier(this is a quality of life upgrade I made myself)
 
     We need the most significant 4 bits of the instruction, so we can bitshift a copy of the instruction to right by 12 bits.
     If i remember right, it should be like this.
       let f = code >> 12;
+    This will get me the f out of 0xfnnn.
+
+    For the nnn we use something called masking, 
+    in whick we bitwise and the instruction with 0x0FFF.
+      let nnn = code & 0x0FFF;
+    This will give the nnn out of fnnn.
+
+    For the nn we use the same technique,
+      let nn = code & 0x00FF;
+
+    For the n we use the same technique,
+      let n = code & 0x000F;
+
+    For x and y we use masking too.
+      let x = code & 0x0F00;
+      let y = code & 0x00F0;
+
 
 
 ** End of Day Review
