@@ -82,7 +82,21 @@ version: 0.1.0
        // Other families
      }
 
+*** 1 family
+    \+-------------\+----------\+------------------------\+
+    \| Instruction \| Assembly \|     Function           \|
+    \+-------------\+----------\+------------------------\+
+    \|    1nnn     \| JP addr  \| Jump to addr nnn       \|
+    \+-------------\+----------\+------------------------\+
 
+    - 1nnn sets program counter to the adderess 0xNNN 
+
+**** Rust
+     match f {
+      match 1 => { chip.pc = nnn},
+      //other Instructions
+      _ => {}
+     }
 ** Architecture
    - Components involved...
 
