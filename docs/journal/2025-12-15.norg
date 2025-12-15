@@ -1,0 +1,43 @@
+@document.meta
+title: Journal Entry 2025-12-15
+description: Daily development log
+authors: Your Name
+categories: [journal]
+created: 2025-12-15
+updated: 2025-12-15
+version: 1.0.0
+@end
+
+* Daily Log: 2025-12-15
+
+** Goals for Today
+   - ( ) Complete the instruction set
+
+** Notes & Thoughts
+   - Yesterday I signed off suddenly, did not feel like working, I will now continue to implement the instruction set.
+  
+     I have implemented every thing upto Ox8xyE instruction, I am 90% done, so that leaves the other 90%.
+     I feel like taking a break now, I will now pause the instruction set, and implement something more fun,
+     I want to be able to load a program we want to run in ram,
+     Rather than hard coding the path to the rom, I want the user to be able to pass arguments while running
+     the program, so it will be like this: chip8 /path/to/file 
+
+    For us to read the arguments passed to program we need the std::env::args crate.
+
+    use std::env;
+   fn main() {
+    let args: Vec<String> = env::args().collect;
+   }
+
+  Now that we have the path, We now need to read the file, put the bytes into our memory.
+   the program starts form  the memory adderess 0x200(512)
+   we use the same logic as the fonts to insert the bytes into ram.
+
+   for (i, &byte) in prog.iter().enumerate() {
+            chip.ram[0x50 + i] = byte;
+        }
+
+** End of Day Review
+   - What did I learn?
+   - What is blocking me?
+

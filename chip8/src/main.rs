@@ -1,3 +1,5 @@
+use std::env;
+
 static FONTS: [u8; 80] = [
   0xF0, 0x90, 0x90, 0x90, 0xF0,
   0x20, 0x60, 0x20, 0x20, 0x70,
@@ -53,27 +55,29 @@ impl Chip8 {
 }
 
 fn main() {
+    let args: Vec<String> = env::args().collect();
+    let path: String = args[1].clone();
+
     let mut chip = Chip8::init();
-    println!("Hello, world!");
+
     exec_instruction(&mut chip, 0xA602);
 }
-
 
 fn exec_instruction(chip: &mut Chip8, code: u16){
     let f = code >> 12; // Family identifier
 
     let nnn = code & 0x0FFF; // address
-    let nn = code & 0x00FF;
-    let n = code & 0x000F; // nibble
+    let nn = (code & 0x00FF) as u8;
+    let n = (code & 0x000F)  as u8; // nibble
 
-    let x = code & 0x0F00;
-    let y = code & 0x00F0;
+    let x = (code & 0x0F00) as usize;
+    let y = (code & 0x00F0) as usize;
 
     match f {
         0x0 => {
             match nn {
                 0xE0 => {
-                    clearDisplay(chip);
+                    clear_display(chip);
                     println!{"done!"}
                 },
                 0xEE => {
@@ -84,13 +88,55 @@ fn exec_instruction(chip: &mut Chip8, code: u16){
             }
         },
         0x1 => { chip.pc = nnn },
-        0x2 => {},
-        0x3 => {},
-        0x4 => {},
-        0x5 => {},
-        0x6 => {},
-        0x7 => {},
-        0x8 => {},
+        0x2 => {
+            chip.sp += 1;
+            chip.stack[chip.sp as usize] = chip.pc;
+            chip.pc = nnn;
+        },
+        0x3 => {
+            if chip.v[x] == nn { chip.pc += 2; }
+        },
+        0x4 => {
+            if chip.v[x] != nn { chip.pc += 2; }
+        },
+        0x5 => {
+            if chip.v[x] == chip.v[y] {
+                chip.pc += 2;
+            }
+        },
+        0x6 => { chip.v[x] = nn; },
+        0x7 => { chip.v[x] += nn; },
+        0x8 => { 
+            match n {
+                0x0 => { chip.v[x] = chip.v[y]; },
+                0x1 => { chip.v[x] = ( chip.v[x] | chip.v[y] ); },
+                0x2 => { chip.v[x] = ( chip.v[x] & chip.v[y] ); },
+                0x3 => { chip.v[x] = ( chip.v[x] ^ chip.v[y] ); },
+                0x4 => {
+                    chip.v[x] += chip.v[y];
+                    if chip.v[x] > 0xFF {
+                        chip.v[0xF] = 1;
+                        chip.v[x] = (chip.v[x] & 0xFF)
+                    }
+                },
+                0x5 => { 
+                    chip.v[x] -= chip.v[y];
+                    if chip.v[x] > chip.v[y] {
+                        chip.v[0xF] = 1;
+                        chip.v[x] = (chip.v[x] & 0xFF)
+                    }
+                },
+                0x6 => { chip.v[x] >>= 1; },
+                0x7 => {
+                    chip.v[y] -= chip.v[x];
+                    if chip.v[x] > chip.v[y] {
+                        chip.v[0xF] = 1;
+                        chip.v[x] = (chip.v[x] & 0xFF)
+                    }
+                },
+                0xE => { chip.v[x] <<= 1; },
+                _ => {}
+            }},
         0x9 => {},
         0xa => {},
         0xb => {},
@@ -102,7 +148,7 @@ fn exec_instruction(chip: &mut Chip8, code: u16){
     }
 }
 
-fn clearDisplay(chip: &mut Chip8){
+fn clear_display(chip: &mut Chip8){
     for ref mut i in chip.display{
         *i = false;
     }

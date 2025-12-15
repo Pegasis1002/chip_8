@@ -83,6 +83,7 @@ version: 0.1.0
      }
 
 *** 1 family
+
     \+-------------\+----------\+------------------------\+
     \| Instruction \| Assembly \|     Function           \|
     \+-------------\+----------\+------------------------\+
@@ -97,6 +98,145 @@ version: 0.1.0
       //other Instructions
       _ => {}
      }
+
+*** 2 family
+
+    \+-------------\+-----------\+-----------------------------------\+
+    \| Instruction \| Assembly  \|              Function             \|
+    \+-------------\+-----------\+-----------------------------------\+
+    \|    2nnn     \| Call addr \| call subroutine at addr nnn       \|
+    \+-------------\+-----------\+-----------------------------------\+
+
+    - 2nnn increments the stack pointer by 1, then push program counter into the stack and set pc to nnn.
+**** Rust
+     {
+      chip.sp += 1;
+      chip.stack\[chip.sp\] = chip.pc;
+      chip.pc = nnn;
+     }
+
+*** 3 family
+
+    \+-------------\+-------------\+-----------------------------------\+
+    \| Instruction \|   Assembly  \|            Function               \|
+    \+-------------\+-------------\+-----------------------------------\+
+    \|    3xnn     \| SE Vx, byte \| Skip next instruction if Vx = nn  \|
+    \+-------------\+-------------\+-----------------------------------\+
+
+    - 3xnn compare the register Vx with the value of nn, if equal increament the program counter by 2.
+
+**** Rust
+     {
+        if chip.v[x] == nn { chip.pc += 2 }
+     }
+
+*** 4 family
+
+    \+-------------\+--------------\+------------------------------------\+
+    \| Instruction \|   Assembly   \|            Function                \|
+    \+-------------\+--------------\+------------------------------------\+
+    \|    4xnn     \| SNE Vx, byte \| Skip next instruction if Vx != nn  \|
+    \+-------------\+--------------\+------------------------------------\+
+
+    - 3xnn compare the register Vx with the value of nn, if not equal increament the program counter by 2.
+
+**** Rust
+     {
+        if chip.v[x] != nn { chip.pc += 2 }
+     }
+
+*** 5 family
+
+    \+-------------\+--------------\+------------------------------------\+
+    \| Instruction \|   Assembly   \|            Function                \|
+    \+-------------\+--------------\+------------------------------------\+
+    \|    4xy0     \| SE Vx, Vy    \| Skip next instruction if Vx == Vy  \|
+    \+-------------\+--------------\+------------------------------------\+
+
+    - 3xnn compare the register Vx with the value of Vy, if equal increament the program counter by 2.
+
+**** Rust
+     {
+        if chip.v[x] != chip.v[y] { chip.pc += 2 }
+     }
+
+*** 6 family
+    \+-------------\+--------------\+------------------------------------\+
+    \| instruction \|   assembly   \|            function                \|
+    \+-------------\+--------------\+------------------------------------\+
+    \|    6xnn     \| LD Vx, byte  \| Put value of nn into Vx            \|
+    \+-------------\+--------------\+------------------------------------\+
+
+    - 6xnn sets the value of register Vx to nn.
+
+**** Rust
+     {
+      chip.v[x] = nn;
+     }
+
+*** 7 family
+
+    \+-------------\+--------------\+------------------------------------\+
+    \| instruction \|   assembly   \|            function                \|
+    \+-------------\+--------------\+------------------------------------\+
+    \|    7xnn     \| ADD Vx, byte \| increment value of Vx by nn        \|
+    \+-------------\+--------------\+------------------------------------\+
+
+    - 7xnn add the values of Vx and nn and puts the result into Vx.
+
+**** Rust
+     {
+     chip.v[x] += nn;
+     }
+
+*** 8 family
+    \+-------------\+--------------\+---------------------------------------------\+
+    \| instruction \|   assembly   \|            function                         \|
+    \+-------------\+--------------\+---------------------------------------------\+
+    \|    8xy0     \| LD Vx, Vy    \| Put value of Vy into Vx                     \|
+    \+-------------\+--------------\+---------------------------------------------\+
+    \|    8xy1     \| OR Vx, Vy    \| perform bitwise-OR on Vx and Vy, store in Vx\|
+    \+-------------\+--------------\+---------------------------------------------\+
+    \|    8xy2     \| AND Vx, Vy   \| Perform And on Vx and Vy, store in Vx       \|
+    \+-------------\+--------------\+---------------------------------------------\+
+    \|    8xy3     \| XOR Vx, Vy   \| Perform XOR on Vx and Vy, store in Vx       \|
+    \+-------------\+--------------\+---------------------------------------------\+
+    \|    8xy4     \| ADD Vx, Vy   \| Increment Vx by Vy, set VF = carry          \|
+    \+-------------\+--------------\+---------------------------------------------\+
+    \|    8xy5     \| SUB Vx, Vy   \| Decrement Vx by Vy, set VF = NOT borrow     \|
+    \+-------------\+--------------\+---------------------------------------------\+
+    \|    8xy6     \| SHR Vx \{, Vy\}\| Set Vx = Vx SHR 1                           \|
+    \+-------------\+--------------\+---------------------------------------------\+
+    \|    8xy7     \| SUBN Vx, Vy  \| Set Vx = Vy - Vx, set Vf = NOT bottow       \|
+    \+-------------\+--------------\+---------------------------------------------\+
+    \|    8xyE     \| SHL Vx \{, Vy\}\| Set Vx = Vx SHL 1                           \|
+    \+-------------\+--------------\+---------------------------------------------\+
+
+    - 8xy0 sets the value of register Vx to  value in register Vy.
+    - LD Vx, Vy means to load the value in second variable into the first.
+
+    - 8xy1 Performs bitwise OR on Vx and Vy, and stores the result in Vx.
+    - 8xy2 Performs bitwise AND on Vx and Vy, and stores the result in Vx.
+    - 8xy3 Performs bitwise XOR on Vx and Vy, and stores the result in Vx.
+    - 8xy4 Increments The value of Vx by Vy, stores in Vx, sets a cary flag(VF).
+    - 8xy5 Decrements The value of Vx by Vy, stores in Vx, sets a NOT borrow flag(VF).
+    - 8xy6 Shift Vx right by 1 bit, store in Vx. The \{\} in \{, Vy\} sets Vy as Optional arg.
+    - 8xy7 Decrements The value of Vy by Vx, store in Vx, Set a NOT borrow flag(VF)
+    - 8xyE Shift Vx left by 1 bit, store in Vx. The \{\} in \{, Vy\} sets Vy as Optional arg.
+
+**** Rust
+     {
+     chip.v[x] = chip.\[y\]; // LD Vx, Vy
+     chip.v\[x] = ( chip.v\[x\] | chip.v\[y\] ) ; // OR Vx, Vy
+     chip.v\[x] = ( chip.v\[x\] & chip.v\[y\] ); // AND Vx, Vy
+     chip.v\[x] = ( chip.v\[x\] ^ chip.v\[y\] ); // XOR Vx, Vy
+     chip.v\[x] += chip.v\[y\]; // ADD Vx, Vy
+     chip.v\[x] = chip.v\[x\] - chip.v\[y\]; // SUB Vx, Vy
+     chip.v\[x] >>= 1; // SHR Vx \{, Vy\}
+     chip.v\[x] = chip.v\[y\] = chip.v\[x\]; // SUBN Vx, Vy
+     chip.v\[x] <<= 1; // SHL Vx \{, Vy\}
+     }
+
 ** Architecture
    - Components involved...
 
