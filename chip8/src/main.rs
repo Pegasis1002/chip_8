@@ -1,4 +1,6 @@
 use std::env;
+use std::io::prelude::*;
+use std::fs::File;
 
 static FONTS: [u8; 80] = [
   0xF0, 0x90, 0x90, 0x90, 0xF0,
@@ -60,6 +62,13 @@ fn main() {
 
     let mut chip = Chip8::init();
 
+    match load_program(&mut chip, path) {
+        Ok(()) => { println!("Loaded program into memory successfuly!")},
+        Err(e) => { eprintln!(" Failed to Load program: {}", e);
+            std::process::exit(1);
+        }
+
+    };
     exec_instruction(&mut chip, 0xA602);
 }
 
@@ -109,21 +118,21 @@ fn exec_instruction(chip: &mut Chip8, code: u16){
         0x8 => { 
             match n {
                 0x0 => { chip.v[x] = chip.v[y]; },
-                0x1 => { chip.v[x] = ( chip.v[x] | chip.v[y] ); },
-                0x2 => { chip.v[x] = ( chip.v[x] & chip.v[y] ); },
-                0x3 => { chip.v[x] = ( chip.v[x] ^ chip.v[y] ); },
+                0x1 => { chip.v[x] = chip.v[x] | chip.v[y]; },
+                0x2 => { chip.v[x] = chip.v[x] & chip.v[y]; },
+                0x3 => { chip.v[x] = chip.v[x] ^ chip.v[y]; },
                 0x4 => {
                     chip.v[x] += chip.v[y];
                     if chip.v[x] > 0xFF {
                         chip.v[0xF] = 1;
-                        chip.v[x] = (chip.v[x] & 0xFF)
+                        chip.v[x] = chip.v[x] & 0xFF
                     }
                 },
                 0x5 => { 
                     chip.v[x] -= chip.v[y];
                     if chip.v[x] > chip.v[y] {
                         chip.v[0xF] = 1;
-                        chip.v[x] = (chip.v[x] & 0xFF)
+                        chip.v[x] = chip.v[x] & 0xFF
                     }
                 },
                 0x6 => { chip.v[x] >>= 1; },
@@ -131,7 +140,7 @@ fn exec_instruction(chip: &mut Chip8, code: u16){
                     chip.v[y] -= chip.v[x];
                     if chip.v[x] > chip.v[y] {
                         chip.v[0xF] = 1;
-                        chip.v[x] = (chip.v[x] & 0xFF)
+                        chip.v[x] = chip.v[x] & 0xFF
                     }
                 },
                 0xE => { chip.v[x] <<= 1; },
@@ -151,5 +160,26 @@ fn exec_instruction(chip: &mut Chip8, code: u16){
 fn clear_display(chip: &mut Chip8){
     for ref mut i in chip.display{
         *i = false;
+    }
+}
+
+fn load_program(chip: &mut Chip8, path: String) -> Result<(), Box<dyn std::error::Error>> {
+    let mut file = File::open(path)?;
+    let mut rom = Vec::new();
+    file.read_to_end(&mut rom)?;
+
+    if rom.len() < 3584 {
+        for (i, &bytes) in rom.iter().enumerate(){
+            chip.ram[0x200 + i ] = bytes;
+        }
+        return Ok(());
+    } else{
+        return Err(
+            format!(
+                "Program is too large. Size: {} bytes, Maximum allowed: {} bytes.",
+                rom.len(),
+                3584
+            ).into()
+        );
     }
 }

@@ -30,12 +30,50 @@ version: 1.0.0
    }
 
   Now that we have the path, We now need to read the file, put the bytes into our memory.
-   the program starts form  the memory adderess 0x200(512)
-   we use the same logic as the fonts to insert the bytes into ram.
+  the program starts form  the memory adderess 0x200(512)
+  we use the same logic as the fonts to insert the bytes into ram.
 
-   for (i, &byte) in prog.iter().enumerate() {
-            chip.ram[0x50 + i] = byte;
-        }
+   //get the file using std::fs
+   use std::fs::File
+
+   let mut file = File::open(path)?;
+   let mut rom = String::new();
+   file.read_to_string(&mut rom_bytes)?;
+
+    // Convert string into bytes
+   rom_bytes: Vec<u8> = rom.into_bytes();
+
+   // insert the rom into ram
+   for (i, &byte) in rom_bytes.iter().enumerate(){
+      chip.ram\[0x200 + i\] = byte;
+   }
+
+   For the file reading I am having to add return a std::io::Result<()> from the funtion. I do not know why that it,
+   I will find it out now.
+   Ok so the above states that the function will return a Result<T, E> It is enum and can be success code or error.
+   As the funtion can fail we need to return an error when It does. for the standard file errors,
+   like not able to read file, not found file, permission denied, etc. The above suffices
+   But if we want to return a custom error like in our case, If the file is too large to load into memory,
+   We need to return a custom error type, can be done by,
+
+   fn func() -> Result<(), Box<dyn std::error::Error>> { ... }
+
+   Now we can return any string wraped in Box<dyn Error> and it will work.
+
+   retrun Err(format!("Error").into());
+
+   The above approach fails as it tries to read our rom as if it was a text document.
+   We have to use the std::fs::read_to_end() instead of std::fs::read_to_string().
+
+    It goes something like this:
+   let mut file = File::open(path);
+   let mut rom_bytes = Vec::new();
+   file.read_to_end(&mut rom_bytes)?;
+
+    // rest is same as above
+
+
+   I have successfuly loaded a rom into memory!!
 
 ** End of Day Review
    - What did I learn?
