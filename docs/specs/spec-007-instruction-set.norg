@@ -237,6 +237,106 @@ version: 0.1.0
      chip.v\[x] <<= 1; // SHL Vx \{, Vy\}
      }
 
+*** 9 Family
+    \+-------------\+--------------\+------------------------------------\+
+    \| instruction \|   assembly   \|            function                \|
+    \+-------------\+--------------\+------------------------------------\+
+    \|    9xy0     \| SNE Vx, Vy   \| skip next instruction if Vx != Vy  \|
+    \+-------------\+--------------\+------------------------------------\+
+
+    - 9xy0 compares the values of Vx and Vy, if equal increment the program counter by 2.
+**** Rust
+     {
+     if chip.v\[x\] == chip.v\[y\] {
+        chip.pc += 2;
+     }
+     }
+*** A Family
+    \+-------------\+--------------\+------------------------------------\+
+    \| instruction \|   assembly   \|            function                \|
+    \+-------------\+--------------\+------------------------------------\+
+    \|    Annn     \| LD I, nnn    \| Set I to value of nnn              \|
+    \+-------------\+--------------\+------------------------------------\+
+
+    - Annn set the value of adderess register(I) to the value of nnn.
+**** Rust
+     {
+     chip.i = nnn;
+     }
+*** B Family
+    \+-------------\+--------------\+------------------------------------\+
+    \| instruction \|   assembly   \|            function                \|
+    \+-------------\+--------------\+------------------------------------\+
+    \|    Bnnn     \| JP V0, addr  \| Jump to location nnn + V0          \|
+    \+-------------\+--------------\+------------------------------------\+
+
+
+    - The program counter is set to nnn plus the value of V0;
+
+**** Rust
+     {
+     chip.pc = (chip.v\[0\] as u16) + nnn;
+     }
+
+*** C Family
+    \+-------------\+--------------\+------------------------------------\+
+    \| instruction \|   assembly   \|            function                \|
+    \+-------------\+--------------\+------------------------------------\+
+    \|    Cxnn     \| RND Vx, byte \| Set Vx to a random value           \|
+    \+-------------\+--------------\+------------------------------------\+
+
+    - Cxnn Set the value of register Vx to a random value
+    - We use rand crate to generate a random u8
+**** Rust
+     {
+     extern crate rand;
+     use rand::Rng;
+     chip.v\[x\] = rand::thread_rng().r#gen();
+     }
+
+*** D Family
+    \+-------------\+--------------\+---------------------------------------------\+
+    \| instruction \|   assembly   \|            function                         \|
+    \+-------------\+--------------\+---------------------------------------------\+
+    \|    Dxyn     \| DRW Vx, Vy, n\| Draw sprite at (Vx, Vy), set VF = collision \|
+    \+-------------\+--------------\+---------------------------------------------\+
+
+    - Draw a n-byte sprite starting at memory location I, at display location (Vx, Vy), set the Vf register to collision.
+    - it read n-bytes from memory, starting at adderess stored in I,
+      These bytes are these bytes are then displayed as sprites on screen at coords (Vx, Vy).
+      Sprites are XORed onto the display array, if this causes any pixels to be erased, VF is set to 1.
+      If the position of sprite is such that part of it is out the bounds, It is 
+
+*** F Family
+
+    \+-------------\+--------------\+---------------------------------------------\+
+    \| instruction \|   assembly   \|            function                         \|
+    \+-------------\+--------------\+---------------------------------------------\+
+    \|    Fx07     \| LD Vx, DT    \| Set Vx = delay timer                        \|
+    \+-------------\+--------------\+---------------------------------------------\+
+    \|    Fx0A     \| LD Vx, K     \| wait for keypress, store it in Vx           \|
+    \+-------------\+--------------\+---------------------------------------------\+
+    \|    Fx15     \| LD DT, Vx    \| Set delay timer = Vx                        \|
+    \+-------------\+--------------\+---------------------------------------------\+
+    \|    Fx18     \| LD ST, Vx    \| Set sount timer = Vx                        \|
+    \+-------------\+--------------\+---------------------------------------------\+
+    \|    Fx1E     \| ADD I, Vx    \| Set I = I + Vx                              \|
+    \+-------------\+--------------\+---------------------------------------------\+
+    \|    Fx29     \| LD F, Vx     \| Set I = location of sprite with digit Vx    \|
+    \+-------------\+--------------\+---------------------------------------------\+
+    \|    Fx33     \| LD B, Vx     \| Store BCD rep of Vx at I, I+1, I+2          \|
+    \+-------------\+--------------\+---------------------------------------------\+
+    \|    Fx55     \| LD \[I\], Vx   \| Store V0 to Vx in memory at location I      \|
+    \+-------------\+--------------\+---------------------------------------------\+
+    \|    Fx65     \| LD Vx, \[I\]   \| Read V0 through Vx starting at loc I        \|
+    \+-------------\+--------------\+---------------------------------------------\+
+
+
+**** Rust
+     { chip.v\[x\] = chip.dt; } // LD Vx, DT
+     { chip.v\[x\] = }// Wait for key and store in Vx yet to be implemented
+
+
 ** Architecture
    - Components involved...
 

@@ -1,0 +1,37 @@
+@document.meta
+title: Journal Entry 2025-12-16
+description: Daily development log
+authors: Your Name
+categories: [journal]
+created: 2025-12-16
+updated: 2025-12-16
+version: 1.0.0
+@end
+
+* Daily Log: 2025-12-16
+
+** Goals for Today
+   - ( ) Complete the instruction set.
+
+** Notes & Thoughts
+   - Today I have got to make some progress with the instruction set.
+     In implementing CxNN, I need to generate a random number and set Vx to that number.
+     The registers are 8-bit wide, we need a u8 rand function.
+
+
+   There is a crate named rand, I will use that.
+
+    use rand::Rng;
+   let mut rng = rand:: tread_rng();
+   chip.v\[x\] = rng.gen();
+
+  This is it, We have a random u8.
+   I need to add the rand crate first to make this work
+   also I have shortend it down to 1 line
+
+  chip.v\[x\] = rand::thread_rng().r#gen();
+
+** End of Day Review
+   - What did I learn?
+   - What is blocking me?
+

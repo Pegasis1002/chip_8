@@ -1,3 +1,5 @@
+extern crate rand;
+use rand::Rng;
 use std::env;
 use std::io::prelude::*;
 use std::fs::File;
@@ -146,10 +148,16 @@ fn exec_instruction(chip: &mut Chip8, code: u16){
                 0xE => { chip.v[x] <<= 1; },
                 _ => {}
             }},
-        0x9 => {},
-        0xa => {},
-        0xb => {},
-        0xc => {},
+        0x9 => {
+            if chip.v[x] == chip.v[y] {
+                chip.pc += 2;
+            }
+        },
+        0xa => { chip.i = nnn;},
+        0xb => { chip.pc = (chip.v[0] as u16) + nnn; },
+        0xc => {
+            chip.v[x] = rand::thread_rng().r#gen();
+        },
         0xd => {},
         0xe => {},
         0xf => {},
