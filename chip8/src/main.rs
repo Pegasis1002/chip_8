@@ -160,7 +160,35 @@ fn exec_instruction(chip: &mut Chip8, code: u16){
         },
         0xd => {},
         0xe => {},
-        0xf => {},
+        0xf => {
+            match nn {
+                0x07 => { chip.v[x] = chip.dt; },
+                0x0A => {}, // yet to be implemented
+                0x15 => { chip.dt = chip.v[x]; },
+                0x18 => { chip.st = chip.v[x]; },
+                0x1E => { chip.i += chip.v[x] as u16; },
+                0x29 => { chip.i = (0x50 + (x * 5)) as u16; },
+                0x33 => {
+                    let val = chip.v[x];
+                    let i = chip.i as usize;
+
+                    chip.ram[i] = val / 100;
+                    chip.ram[i+1] = (val / 10) % 10;
+                    chip.ram[i+2] = val%10;
+                },
+                0x55 => {
+                    for i in 0..0xF {
+                        chip.ram[(chip.i + i) as usize] = chip.v[i as usize]; 
+                    }
+                },
+                0x65 => {
+                    for i in 0..0xF {
+                        chip.v[i as usize] = chip.ram[(chip.i + i) as usize];
+                    }
+                },
+                _ => {},
+            }
+        },
         _ => println!("Invalid instruction.")
     }
 }

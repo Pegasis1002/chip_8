@@ -31,6 +31,34 @@ version: 1.0.0
 
   chip.v\[x\] = rand::thread_rng().r#gen();
 
+   I am facing a new problem, I need to wait for a key to be pressed, but we do not have a keyboard yet.
+   it would be the right call to implement Fx0A later when we do have a keyboard and all the logic is figured out.
+
+
+   For now I will implement evry thing else, For the display as well I need a bit more work.
+   The Fx29 instruction is a brain teaser. I think This is how we do it, First match for x, for each value of x (0x0 to 0xF), 
+   we set a hard coded location of the sprite.
+   or maybe we can do is , we know that fonts start from 0x50, we know the size of each sprite is 5 byte long.
+   we can then do this
+   chip.i = 0x50 + (x * 5);
+   I verified with gemini, it says this implementation is perferct.
+
+
+   Now for the instrcution Fx33, what it does is that it takes decimal value of Vx, places 100's digit in location I,
+   10's digit in I+1, and 1's digit in I+2.
+   to achive this we can do this, divide the value of Vx by 100, discard the fractional part, store the result in ram at I.
+   for the 10's digit however it requires a bit more work, we need to first do modulus operation on VX by 100, then divide by 10
+   for 1's digit is is simply a modulus of Vx by 10;
+
+
+   let val = chip.v\[x\];
+   let i = chip.i;
+
+   chip.ram\[i\] = val / 100;
+   chip.ram\[i+1\] = (val/10)%10;
+   chip.ram\[i+2\] = (val%10);
+
+ 
 ** End of Day Review
    - What did I learn?
    - What is blocking me?

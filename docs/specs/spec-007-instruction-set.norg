@@ -335,6 +335,29 @@ version: 0.1.0
 **** Rust
      { chip.v\[x\] = chip.dt; } // LD Vx, DT
      { chip.v\[x\] = }// Wait for key and store in Vx yet to be implemented
+     { chip.dt = chip.v\[x\]; } // LD DT, Vx
+     { chip.st = chip.v\[x\]; } // LD ST, Vx
+     { chip.i += chip.v\[x\]; } // ADD I, Vx
+
+     { for i in 0..0xF {
+        chip.ram\[ chip.i + i\] = chip.v\[i\];
+     }} // LD \[I\], Vx
+
+     { chip.i = (0x50 + (x*5)) as u16; }
+
+     {
+                    let val = chip.v[x];
+                    let i = chip.i as usize;
+
+                    chip.ram[i] = val / 100;
+                    chip.ram[i+1] = (val / 10) % 10;
+                    chip.ram[i+2] = val%10;
+     }
+     {
+     for i in 0..0xF {
+     chip.v[i as usize] = chip.ram\[(chip.i + i) as usize]
+     }
+     }
 
 
 ** Architecture
