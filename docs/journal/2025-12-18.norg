@@ -1,0 +1,76 @@
+@document.meta
+title: Journal Entry 2025-12-18
+description: Daily development log
+authors: Your Name
+categories: [journal]
+created: 2025-12-18
+updated: 2025-12-18
+version: 1.0.0
+@end
+
+* Daily Log: 2025-12-18
+
+** Goals for Today
+   - ( ) Complete Instruction set
+
+** Notes & Thoughts
+  I skiped yesterday, But today I have the full day to focus on the interpriter.
+   Goal for to today is to complete the interpriter and possibly try running and rom.
+   first lets assess what is still to be implemented.
+   We have the following instructions left:
+   DxyN, Ex9E, ExA1, Fx0A.
+
+
+   I am struggling with the DxyN one, It is the most complex of the  bunch.
+   But I want to implement it first.
+
+
+   The rules for this instruction are, as follows:
+   interpriter reads n-bytes from memory, starting adderess is I, These bytes are then displayed as sprites on screen at
+   coordinates (Vx, Vy).
+   Sprites are XORed onto the screen.
+   If this causes any pixels to be erased, Set the VF register to 1, otherwise to 0.
+   If a sprite is displayed such that part of it is out side the screen, it wraps around to the other side.
+
+
+   The implementation:
+   I am thinking of abstracting this to a draw funciton in the chip struct.
+   fn draw(&mut self, x: usize, y: usize, n: u8) { ... }
+
+
+   I dont thing this function to return anything.
+   We know that the sprite is 5 high, each row has 8 bits.
+   for example, 
+   0xF0 => 11110000
+   0x90 => 10010000
+   0x90 => 10010000
+   0x90 => 10010000
+   0xF0 => 11110000
+
+
+   We need to extract each byte and draw them spaerately, meaning 0xF0 from the example is XORed onto the screen at
+   coords (Vx, Vy), similarly, 0x90 is XORed onto the screen at coords (Vx, Vy+1)
+
+   We again have to check for wraping so we need another loop inside the first for each binary value.
+
+
+   So the function will be like this,
+   for s in 0..5 {
+      
+   }
+
+  Or no, We do not know how many bytes the this sprite is, the n specifies the number of bytes in the sprite, this is how
+   the program defined sprites.
+   the interpriter should be able to take any number of byte(as long as it does not exceed memory limit) and render the sprite
+   onto the screen.
+
+
+   I think the loop approach is good, 
+   for s in 0..n {
+
+   }
+
+* End of Day Review
+   - What did I learn?
+   - What is blocking me?
+

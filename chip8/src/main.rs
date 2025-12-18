@@ -56,6 +56,9 @@ impl Chip8 {
         // Return the initialized chip8 struct
         return chip
     }
+    fn draw(&mut self, x: usize, y: usize, n: u8){
+
+    }
 }
 
 fn main() {

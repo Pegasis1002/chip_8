@@ -58,6 +58,14 @@ version: 1.0.0
    chip.ram\[i+1\] = (val/10)%10;
    chip.ram\[i+2\] = (val%10);
 
+
+   I have completed the F family of instructions.
+   Now all that remains is the D and E families, I will do the D fam first and then go for the E fam.
+
+
+   The D fam actually only has 1 instruction, that is Dxyn. This instructs the interpriter to display.
+   I will do this tomorrow.
+
  
 ** End of Day Review
    - What did I learn?
